@@ -134,6 +134,6 @@ def api_show_location(request, id):
             "room_count": location.room_count,
             "created": location.created,
             "updated": location.updated,
-            "state": location.state,
+            "state": location.state.abbreviation,
         }
     )

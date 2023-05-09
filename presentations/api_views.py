@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 
 from .models import Presentation
+from events.models import Conference
 
 
 def api_list_presentations(request, conference_id):
