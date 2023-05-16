@@ -4,7 +4,7 @@ from .models import Conference, Location, State
 from common.json import ModelEncoder
 import json
 
-from .acls import get_photo
+from .acls import get_photo, get_weather_data
 
 
 class LocationDetailEncoder(ModelEncoder):
@@ -127,12 +127,14 @@ def api_show_conference(request, id):
     """
     if request.method == "GET":
         conference = Conference.objects.get(id=id)
-        # location = Location.objects.get(name=str(conference.location))
-        # weather = get_weather(location.city, location.state.abbreviation)
+        weather = get_weather_data(
+            conference.location.city,
+            conference.location.state.abbreviation,
+            )
         return JsonResponse(
             {
                 "conference": conference,
-                # "weather": weather,
+                "weather": weather,
             },
             encoder=ConferenceDetailEncoder,
             safe=False,
