@@ -153,9 +153,15 @@ def api_account_detail(request, email):
         response.status_code = status
         return response
     else:
-        account.is_active = False
-        account.save()
-        send_account_data(account)
-        response = HttpResponse()
-        response.status_code = 204
-        return response
+        try:
+            account.is_active = False
+            account.save()
+            send_account_data(account)
+            response = HttpResponse()
+            response.status_code = 204
+            return response
+        except AttributeError:
+            return JsonResponse(
+                {"message": "User already deleted"},
+                status=400,
+            )

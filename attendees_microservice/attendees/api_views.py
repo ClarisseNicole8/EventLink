@@ -120,9 +120,10 @@ def api_show_attendee(request, id):
         return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
+        print(content)
         try:
-            attendee = Attendee.objects.get(content["attendee"])
-            content["attendee"] = attendee
+            attendee = Attendee.objects.get(id=id)
+            # content["attendee"] = attendee
         except Attendee.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid attendee id"},
